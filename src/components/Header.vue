@@ -10,7 +10,7 @@
 <style scoped>
 div {
     text-align: center;
-    padding-top: 4em;
+    margin-top: 2em;
 }
 
 h1 {

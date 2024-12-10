@@ -37,7 +37,7 @@ export default {
 
 <style scoped>
 .main {
-    padding: 4em;
+    margin: 4em;
     display: flex;
     justify-content: center;
 }

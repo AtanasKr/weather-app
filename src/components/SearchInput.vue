@@ -4,8 +4,10 @@
             <div class="inner-bg">
                 <input type="text" placeholder="Enter your location...">
                 <div class="btn-group">
-                    <img :src="require('@/assets/search-btn.png')" alt="search-btn" style="width: 40px; height :40px">
-                    <img :src="require('@/assets/plus-btn.png')" alt="plus-btn" style="width: 40px; height :40px">
+                    <img class="active-btn" :src="require('@/assets/search-btn.png')" alt="search-btn"
+                        style="width: 40px; height :40px">
+                    <img class="active-btn" :src="require('@/assets/plus-btn.png')" alt="plus-btn"
+                        style="width: 40px; height :40px">
                 </div>
             </div>
         </div>
@@ -17,7 +19,7 @@
 
 <style scoped>
 .main {
-    padding-top: 5em;
+    margin-top: 3em;
     display: flex;
     justify-content: center;
 }
@@ -54,6 +56,10 @@ input::placeholder {
 }
 
 .btn-group {
-    padding-left: 15em
+    margin-left: 15em
+}
+
+.active-btn {
+    cursor: pointer;
 }
 </style>

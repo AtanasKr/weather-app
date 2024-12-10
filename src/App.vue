@@ -2,17 +2,21 @@
   <Header />
   <SearchInput />
   <MainCard />
+  <History />
 </template>
 
 <script>
 import Header from './components/Header.vue';
 import SearchInput from './components/SearchInput.vue'
 import MainCard from './components/MainCard.vue'
+import History from './components/History.vue';
+
 export default {
   components: {
     Header,
     SearchInput,
-    MainCard
+    MainCard,
+    History
   }
 }
 </script>
@@ -27,5 +31,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh;
+  margin: 0;
+  overflow: hidden;
 }
 </style>
