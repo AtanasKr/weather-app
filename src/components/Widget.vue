@@ -5,7 +5,7 @@
                 alt="widget-icon" style="width: 50px; height: 50px" />
         </div>
         <div class="widget-right">
-            <p class="content-holder">{{ content }}{{ header === 'Humidiry' ? '%' : 'km/h' }}</p>
+            <p class="content-holder">{{ content }}{{ header === 'Humidity' ? '%' : ' km/h' }}</p>
             <p>{{ header }}</p>
         </div>
     </div>

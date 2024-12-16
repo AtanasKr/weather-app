@@ -2,10 +2,10 @@
     <div class="main">
         <div class="upper-bg">
             <div class="inner-bg">
-                <input type="text" placeholder="Enter your location...">
+                <input v-model="location" type="text" placeholder="Enter your location..." @keyup.enter="fetchWeather">
                 <div class="btn-group">
                     <img class="active-btn" :src="require('@/assets/search-btn.png')" alt="search-btn"
-                        style="width: 40px; height :40px">
+                        style="width: 40px; height :40px" @click="fetchWeather">
                     <img class="active-btn" :src="require('@/assets/plus-btn.png')" alt="plus-btn"
                         style="width: 40px; height :40px">
                 </div>
@@ -15,6 +15,44 @@
 </template>
 
 <script>
+export default {
+    data() {
+        return {
+            location: 'London',
+            apiKey: process.env.VUE_APP_WEATHER_API_KEY
+        };
+    },
+    methods: {
+        async fetchWeather() {
+            if (!this.location) {
+                alert('Please enter a location');
+                return;
+            }
+
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${this.location}&units=metric&appid=${this.apiKey}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.cod === 200) {
+                    this.$emit('weatherFetched', data);
+                } else {
+                    alert('Location not found');
+                    this.weatherData = null;
+                }
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                alert('Error fetching weather data');
+            }
+        },
+    },
+    mounted() {
+        if (this.location) {
+            this.fetchWeather();
+        }
+    }
+};
 </script>
 
 <style scoped>
@@ -56,7 +94,7 @@ input::placeholder {
 }
 
 .btn-group {
-    margin-left: 15em
+    margin-left: 15em;
 }
 
 .active-btn {

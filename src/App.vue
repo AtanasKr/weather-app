@@ -1,8 +1,8 @@
 <template>
   <Header />
-  <SearchInput />
-  <MainCard />
-  <History />
+  <SearchInput @weatherFetched="setWeatherData" />
+  <MainCard :weatherData="weatherData" />
+  <History :searchHistory="searchHistory" @remove-item="handleRemoveItem" />
 </template>
 
 <script>
@@ -17,6 +17,21 @@ export default {
     SearchInput,
     MainCard,
     History
+  },
+  data() {
+    return {
+      weatherData: null,
+      searchHistory: []
+    }
+  },
+  methods: {
+    setWeatherData(data) {
+      this.weatherData = data;
+      this.searchHistory.push(data);
+    },
+    handleRemoveItem(index) {
+      this.searchHistory.splice(index, 1);
+    }
   }
 }
 </script>
@@ -32,6 +47,5 @@ body {
   background-repeat: no-repeat;
   height: 100vh;
   margin: 0;
-  overflow: hidden;
 }
 </style>

@@ -1,36 +1,75 @@
 <template>
-    <div class="main">
-        <div class="content">
-            <div class="content-left">
-                <p class="place-name">London</p>
-                <div class="temperature">
-                    <span>30&deg;</span>
+    <transition name="fade" @before-enter="beforeEnter" @enter="enter" @leave="leave">
+        <div v-if="weatherData" :key="weatherData.name" class="main">
+            <div class="content">
+                <div class="content-left">
+                    <p class="place-name">{{ weatherData.name }}</p>
+                    <div class="temperature">
+                        <span>{{ Math.round(weatherData.main.temp) }}&deg;</span>
+                    </div>
+                    <div class="widget-group">
+                        <Widget :content="weatherData.main.humidity" :header="'Humidity'" />
+                        <Widget :content="weatherData.wind.speed" :header="'Wind speed'" />
+                    </div>
                 </div>
-                <div class="widget-group">
-                    <Widget :content="humidityPercent" :header="'Humidity'" />
-                    <Widget :content="windSpeed" :header="'Wind speed'" />
+                <div class="content-right">
+                    <img :src="getWeatherImage(weatherData.weather[0].main)" :alt="weatherData.weather[0].main"
+                        style="width: 90px; height: 90px">
+                    <p style="font-weight: 700; color:white; font-size:32px">{{ weatherData.weather[0].main }}</p>
                 </div>
-            </div>
-            <div class="content-right">
-                <img :src="require('@/assets/clear-moon.png')" alt="clear-moon" style="width: 90px; height :90px">
-                <p style="font-weight: 700; color:white; font-size:32px">Clear</p>
             </div>
         </div>
-    </div>
+    </transition>
 </template>
 
 <script>
 import Widget from './Widget.vue';
 
 export default {
-    data() {
-        return {
-            humidityPercent: 75,
-            windSpeed: 7,
-        };
+    props: {
+        weatherData: {
+            type: Object,
+            required: false,
+        },
     },
     components: {
         Widget
+    },
+    methods: {
+        getWeatherImage(weatherCondition) {
+            switch (weatherCondition) {
+                case 'Clear':
+                    return require('@/assets/Clear.png');
+                case 'Clouds':
+                    return require('@/assets/Clouds.png');
+                case 'Rain':
+                    return require('@/assets/Rain.png');
+                case 'Thunderstorm':
+                    return require('@/assets/Thunderstorm.png');
+                case 'Snow':
+                    return require('@/assets/Snow.png');
+                case 'Fog':
+                    return require('@/assets/Mist.png');
+                case 'Mist':
+                    return require('@/assets/Mist.png');
+                default:
+                    return require('@/assets/Clear.png');
+            }
+        },
+        beforeEnter(el) {
+            el.style.opacity = 0; // Start with an opacity of 0
+        },
+        enter(el, done) {
+            el.offsetHeight; // Trigger reflow to ensure transition runs
+            el.style.transition = 'opacity 1s ease'; // Define the transition
+            el.style.opacity = 1; // Fade to opacity 1
+            done(); // Signal that the transition is complete
+        },
+        leave(el, done) {
+            el.style.transition = 'opacity 1s ease'; // Define the transition
+            el.style.opacity = 0; // Fade out
+            done(); // Signal that the transition is complete
+        }
     }
 }
 </script>
@@ -81,5 +120,19 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+/* Fade Transition Styles */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 1s ease;
+}
+
+.fade-enter,
+.fade-leave-to
+
+/* .fade-leave-active in <2.1.8 */
+    {
+    opacity: 0;
 }
 </style>
