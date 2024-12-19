@@ -3,12 +3,8 @@
         <div class="upper-bg">
             <div class="inner-bg">
                 <input v-model="location" type="text" placeholder="Enter your location..." @keyup.enter="fetchWeather">
-                <div class="btn-group">
-                    <img class="active-btn" :src="require('@/assets/search-btn.png')" alt="search-btn"
-                        style="width: 40px; height :40px" @click="fetchWeather">
-                    <img class="active-btn" :src="require('@/assets/plus-btn.png')" alt="plus-btn"
-                        style="width: 40px; height :40px">
-                </div>
+                <img class="active-btn" :src="require('@/assets/search-btn.png')" alt="search-btn"
+                    style="width: 40px; height :40px" @click="fetchWeather">
             </div>
         </div>
     </div>
@@ -99,5 +95,6 @@ input::placeholder {
 
 .active-btn {
     cursor: pointer;
+    margin-left: 18em;
 }
 </style>
